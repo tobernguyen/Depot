@@ -72,4 +72,13 @@ class ProductTest < ActiveSupport::TestCase
     assert_equal [I18n.translate('errors.messages.taken')],
                  product.errors[:title]
   end
+
+  test "product title has minimum length is ten" do
+    product = Product.new(title: "too tiny",
+						  description: "this product is not valid because its title is too short (<10)",
+						  price: 10.0,
+						  image_url: "too_short.png")
+    assert product.invalid?
+    assert_equal [I18n.translate('errors.messages.too_short', :count=>10)], product.errors[:title]
+  end
 end
