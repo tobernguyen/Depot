@@ -1,7 +1,9 @@
-var cart = $('#cart');
+cart = $('#cart');
 
 if ($(cart).find('tr').length == 2) {
-    $(cart).hide(1000);
+    $(cart).hide(1000, function(){
+        $(this).find('tr').not('.total_line').remove();
+    });
 } else {
     $(cart).html("<%= escape_javascript render(@cart) %>");
     $('#current_item').css({'background-color' : '#88ff88'}).animate({'background-color' : '#114411'}, 1000);

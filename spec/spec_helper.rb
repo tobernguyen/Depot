@@ -7,6 +7,7 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 
 RSpec.configure do |config|
+  config.include FactoryGirl::Syntax::Methods
   config.mock_with :rspec
   config.expect_with :rspec
   config.after(:all) do
