@@ -1,9 +1,27 @@
 class LineItemsController < ApplicationController
   include CurrentCart
 
-  before_action :set_cart, only: [:create]
+  before_action :set_cart, only: [:create, :decrement]
 
-  before_action :set_line_item, only: [:show, :edit, :update, :destroy]
+  before_action :set_line_item, only: [:show, :edit, :update, :destroy, :decrement]
+
+  # POST /line_items/1/decrement
+  # POST line_items/1/decrement.json
+  def decrement
+    if @line_item.quantity == 1
+      @line_item.destroy
+    else
+      @line_item.quantity -= 1
+    end
+
+    respond_to do |format|
+      if @line_item.save
+        format.html { redirect_to store_url }
+        format.js { @current_item = @line_item }
+        format.json { render action: 'decrement' }
+      end
+    end
+  end
 
   # GET /line_items
   # GET /line_items.json

@@ -14,6 +14,4 @@
 </table>
 
 <!-- START_HIGHLIGHT -->
-<%= button_to 'Empty cart', cart, method: :delete,
-              #END_HIGHLIGHT
-              data: { confirm: 'Are you sure?' } %>
+<%= button_to 'Empty cart', cart, method: :delete, remote: true, data: { confirm: 'Are you sure?' } %>
