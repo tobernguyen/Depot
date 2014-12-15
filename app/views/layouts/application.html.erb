@@ -2,38 +2,46 @@
 <html>
 <head>
   <title>Pragprog Books Online Store</title>
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
 </head>
 <body class="<%= controller.controller_name %>">
 <!-- START_HIGHLIGHT -->
-  <div id="banner">
-    <%= image_tag("logo.png") %>
-    <%= @page_title || "Pragmatic Bookshelf" %><!-- <label id="code.depot.e.title"/> -->
-  </div>
-  <div id="columns">
-    <div id="side">
-      <% if @cart %>
+<div id="banner">
+  <%= image_tag("logo.png") %>
+  <%= @page_title || "Pragmatic Bookshelf" %><!-- <label id="code.depot.e.title"/> -->
+</div>
+<div id="columns">
+  <div id="side">
+    <% if @cart %>
         <%= hidden_div_if(@cart.line_items.empty?, id: "cart") do %>
-          <%= render @cart %>
+            <%= render @cart %>
         <% end %>
-      <% end %>
+    <% end %>
 
-      <ul>
-        <li><%= link_to 'Home', store_path %></li>
-        <li><a href="./">Questions</a></li>
-        <li><a href="./">News</a></li>
-        <li><a href="./">Contact</a></li>
-        <li><p><%= date_loaded %></p></li>
-      </ul>
-    </div>
-    <div id="main">
-<!-- END_HIGHLIGHT -->
-<%= yield %>
-<!-- START_HIGHLIGHT -->
-    </div>
+    <ul>
+      <li><%= link_to 'Home', store_path %></li>
+      <li><a href="./">Questions</a></li>
+      <li><a href="./">News</a></li>
+      <li><a href="./">Contact</a></li>
+      <li><p><%= date_loaded %></p></li>
+    </ul>
+
+    <% if session[:user_id] %>
+        <ul>
+          <li><%= link_to 'Orders', orders_path %></li>
+          <li><%= link_to 'Product', products_path %></li>
+        </ul>
+        <%= button_to 'Logout', logout_path, method: :delete %>
+    <% end %>
   </div>
+  <div id="main">
+    <!-- END_HIGHLIGHT -->
+    <%= yield %>
+    <!-- START_HIGHLIGHT -->
+  </div>
+</div>
 <!-- END_HIGHLIGHT -->
 </body>
 </html>
